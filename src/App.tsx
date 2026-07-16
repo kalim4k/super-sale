@@ -66,7 +66,7 @@ export default function App() {
   if (!isUnlocked) {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center bg-[#f8f9fa] px-4 py-8 text-slate-800 font-sans selection:bg-blue-500/30">
-        <div className="w-full max-w-[440px] bg-white rounded-[28px] border border-slate-100 shadow-xl p-8 sm:p-10 flex flex-col items-center" id="lock-card">
+        <div className="w-full max-w-[440px] bg-white rounded-[28px] border border-slate-100 shadow-xl p-5 xs:p-8 sm:p-10 flex flex-col items-center" id="lock-card">
           
           {/* Avatar frame with Amira's photo */}
           <div className="flex justify-center mb-4">
@@ -207,10 +207,10 @@ export default function App() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.98, y: -10 }}
               transition={{ duration: 0.25 }}
-              className="rounded-3xl border border-slate-900 bg-slate-950/60 p-6 shadow-2xl backdrop-blur-md sm:p-10"
+              className="w-full rounded-3xl border border-slate-900 bg-slate-950/60 p-5 xs:p-6 sm:p-10 shadow-2xl backdrop-blur-md"
               id="step-age"
             >
-              <h1 className="text-center font-display text-2xl font-bold tracking-tight text-white sm:text-3xl">
+              <h1 className="text-center font-display text-xl xs:text-2xl font-bold tracking-tight text-white sm:text-3xl">
                 Quel est votre âge ?
               </h1>
               <p className="mt-2 text-center text-xs text-slate-400">
@@ -244,7 +244,7 @@ export default function App() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.98, y: -10 }}
               transition={{ duration: 0.25 }}
-              className="rounded-3xl border border-slate-900 bg-slate-950/60 p-6 shadow-2xl backdrop-blur-md sm:p-10"
+              className="w-full rounded-3xl border border-slate-900 bg-slate-950/60 p-5 xs:p-6 sm:p-10 shadow-2xl backdrop-blur-md"
               id="step-country"
             >
               <div className="flex items-center justify-between">
@@ -261,31 +261,33 @@ export default function App() {
                 <img
                   src="https://ysbiedwkakdqadxtuwab.supabase.co/storage/v1/object/public/uploads/76cad39d-ac23-4be6-b75a-ccdd4c33a47f.png"
                   alt="Club Amira Banner"
-                  className="w-full h-auto object-cover max-h-56 sm:max-h-64"
+                  className="w-full h-auto object-cover max-h-40 sm:max-h-64"
                   referrerPolicy="no-referrer"
                 />
               </div>
 
-              <h1 className="mt-6 text-center font-display text-2xl font-bold tracking-tight text-white sm:text-3xl">
+              <h1 className="mt-5 text-center font-display text-xl xs:text-2xl font-bold tracking-tight text-white sm:text-3xl">
                 Quel est votre pays ?
               </h1>
               <p className="mt-2 text-center text-xs text-slate-400">
                 Sélectionnez votre localisation pour obtenir les bons contacts.
               </p>
 
-              <div className="mt-8 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+              <div className="mt-6 grid grid-cols-2 gap-2">
                 {[
                   { label: "Togo 🇹🇬", value: "Togo" },
                   { label: "Benin 🇧🇯", value: "Benin" },
                   { label: "Côte d'ivoire 🇨🇮", value: "Côte d'ivoire" },
                   { label: "Cameroun 🇨🇲", value: "Cameroun" },
                   { label: "Senegal 🇸🇳", value: "Senegal" },
+                  { label: "Burkina Faso 🇧🇫", value: "Burkina Faso" },
+                  { label: "Niger 🇳🇪", value: "Niger" },
                   { label: "Autre 🌍", value: "Autre" },
                 ].map((opt) => (
                   <button
                     key={opt.value}
                     onClick={() => handleSelectOption("country", opt.value)}
-                    className="flex items-center justify-between rounded-xl border border-slate-800/80 bg-slate-900/35 px-4.5 py-4 text-sm font-semibold text-slate-200 transition-all duration-200 hover:border-rose-500/30 hover:bg-slate-900/80 hover:text-white"
+                    className="flex items-center justify-between rounded-xl border border-slate-800/80 bg-slate-900/35 px-3 py-3 text-xs xs:text-sm font-semibold text-slate-200 transition-all duration-200 hover:border-rose-500/30 hover:bg-slate-900/80 hover:text-white"
                   >
                     <span>{opt.label}</span>
                   </button>
@@ -302,7 +304,7 @@ export default function App() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.98, y: -10 }}
               transition={{ duration: 0.25 }}
-              className="rounded-3xl border border-slate-900 bg-slate-950/60 p-6 shadow-2xl backdrop-blur-md sm:p-10"
+              className="w-full rounded-3xl border border-slate-900 bg-slate-950/60 p-5 xs:p-6 sm:p-10 shadow-2xl backdrop-blur-md"
               id="step-amira-offer"
             >
               <div className="flex items-center justify-between">
@@ -318,7 +320,7 @@ export default function App() {
               {/* Conversational Avatar Design */}
               <div className="mt-4 flex flex-col items-center">
                 <div className="relative">
-                  <div className="h-28 w-28 overflow-hidden rounded-full border-2 border-rose-500 bg-slate-900 shadow-xl">
+                  <div className="h-24 w-24 sm:h-28 sm:w-28 overflow-hidden rounded-full border-2 border-rose-500 bg-slate-900 shadow-xl">
                     <img
                       src="https://ysbiedwkakdqadxtuwab.supabase.co/storage/v1/object/public/uploads/7ecf9fc5-15b1-431a-95c7-f1b94ce68728.png"
                       alt="Amira"
@@ -326,12 +328,12 @@ export default function App() {
                       referrerPolicy="no-referrer"
                     />
                   </div>
-                  <span className="absolute bottom-1 right-1 h-5 w-5 rounded-full bg-green-500 ring-2 ring-slate-950" />
+                  <span className="absolute bottom-1 right-1 h-4 w-4 sm:h-5 sm:w-5 rounded-full bg-green-500 ring-2 ring-slate-950" />
                 </div>
                 <span className="mt-2.5 text-xs font-bold text-green-400">Amira est en ligne</span>
               </div>
 
-              <h2 className="mt-5 text-center font-sans text-lg font-medium leading-relaxed text-slate-100 px-2 sm:text-xl">
+              <h2 className="mt-5 text-center font-sans text-sm xs:text-base sm:text-lg md:text-xl font-medium leading-relaxed text-slate-100 px-2">
                 Je suis Amira, je te propose un mougouli à 7000f? voulez vous son numéro WhatsApp ?
               </h2>
 
@@ -360,7 +362,7 @@ export default function App() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.98, y: -10 }}
               transition={{ duration: 0.25 }}
-              className="rounded-3xl border border-slate-900 bg-slate-950/60 p-6 shadow-2xl backdrop-blur-md sm:p-10"
+              className="w-full rounded-3xl border border-slate-900 bg-slate-950/60 p-5 xs:p-6 sm:p-10 shadow-2xl backdrop-blur-md"
               id="step-catalogue-offer"
             >
               <div className="flex items-center justify-between">
@@ -374,7 +376,7 @@ export default function App() {
               </div>
 
               {/* Deux images l'une à côté de l'autre */}
-              <div className="mt-6 grid grid-cols-2 gap-3">
+              <div className="mt-5 grid grid-cols-2 gap-3">
                 <div className="overflow-hidden rounded-2xl border border-slate-900/60 shadow-lg aspect-[4/5]">
                   <img
                     src="https://ysbiedwkakdqadxtuwab.supabase.co/storage/v1/object/public/uploads/18f408a9-879d-4629-ab6f-bb245d6830ea.jpg"
@@ -393,18 +395,18 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="mt-5 overflow-hidden rounded-2xl border border-slate-900 shadow-md">
+              <div className="mt-4 overflow-hidden rounded-2xl border border-slate-900 shadow-md">
                 <img
                   src="https://ysbiedwkakdqadxtuwab.supabase.co/storage/v1/object/public/uploads/a54a78c4-d777-45cb-939a-69ce5e28e28c.png"
                   alt="Aperçu VIP"
-                  className="w-full h-auto object-cover max-h-56 sm:max-h-64"
+                  className="w-full h-auto object-cover max-h-40 sm:max-h-64"
                   referrerPolicy="no-referrer"
                 />
               </div>
 
-              <h2 className="mt-5 text-center font-sans text-base font-medium leading-relaxed text-slate-200 sm:text-lg">
+              <h2 className="mt-4 text-center font-sans text-xs xs:text-sm sm:text-base md:text-lg font-medium leading-relaxed text-slate-200">
                 Dans ce cas je vous propose aussi un catalogue complet de plus de 100 numéros WhatsApp de kpoclé que tu peux appeler pour mougouli;
-                tu es interessé ?
+                tu es intéressé ?
               </h2>
 
               <div className="mt-8 space-y-3">
@@ -432,36 +434,36 @@ export default function App() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.98, y: -10 }}
               transition={{ duration: 0.3 }}
-              className="rounded-3xl border border-slate-900 bg-slate-950/65 p-6 shadow-2xl backdrop-blur-md sm:p-10"
+              className="w-full rounded-3xl border border-slate-900 bg-slate-950/65 p-5 xs:p-6 sm:p-10 shadow-2xl backdrop-blur-md"
               id="step-final-checkout"
             >
-              <div className="mb-6 overflow-hidden rounded-2xl border border-slate-900 shadow-md">
+              <div className="mb-5 overflow-hidden rounded-2xl border border-slate-900 shadow-md">
                 <img
                   src="https://ysbiedwkakdqadxtuwab.supabase.co/storage/v1/object/public/uploads/a54a78c4-d777-45cb-939a-69ce5e28e28c.png"
                   alt="Aperçu Catalogue VIP"
-                  className="w-full h-auto object-cover max-h-56 sm:max-h-64"
+                  className="w-full h-auto object-cover max-h-40 sm:max-h-64"
                   referrerPolicy="no-referrer"
                 />
               </div>
 
               {/* Copy part 1 */}
-              <p className="text-center text-base font-bold text-white leading-relaxed sm:text-lg">
-                Parfait, voici le catalogue que j'ai préparer pour toi. Ya mon numéro dedans avec plus de 150 kpoklé de (Togo, Bénin, côte d'ivoire, Senegal, Burkina Faso, Mali, Cameroun, Niger…)
+              <p className="text-center text-xs xs:text-sm sm:text-base font-bold text-white leading-relaxed">
+                Parfait, voici le catalogue que j'ai préparé pour toi. Ya mon numéro dedans avec plus de 150 kpoklé de (Togo, Bénin, côte d'ivoire, Senegal, Burkina Faso, Mali, Cameroun, Niger…)
               </p>
 
               {/* trust badge image */}
-              <div className="mt-5 flex justify-center">
+              <div className="mt-4 flex justify-center w-full">
                 <img
                   src="https://ysbiedwkakdqadxtuwab.supabase.co/storage/v1/object/public/uploads/a226fcac-e7a5-4f22-87f9-213ae88f60f7.svg"
                   alt="Badge de confiance"
-                  className="h-10 w-auto object-contain"
+                  className="h-10 max-w-[180px] w-full object-contain"
                   referrerPolicy="no-referrer"
                 />
               </div>
 
               {/* Copy part 2 */}
-              <div className="mt-5 rounded-2xl bg-rose-950/15 border border-rose-900/20 p-4.5 text-center text-xs text-rose-300 leading-relaxed font-medium">
-                "C'est satisfait ou rembourssé, y a mon numéro dedans, donc si tu n'est pas interessé, tu m'ecris et je te remboursse ton jeton."
+              <div className="mt-4 rounded-2xl bg-rose-950/15 border border-rose-900/20 p-4 text-center text-[11px] xs:text-xs text-rose-300 leading-relaxed font-medium">
+                "C'est satisfait ou remboursé, y a mon numéro dedans, donc si tu n'es pas intéressé, tu m'écris et je te rembourse ton jeton."
               </div>
 
               {/* Action area */}
