@@ -1,0 +1,6 @@
+{
+  "name": "Club Amira VIP",
+  "description": "Un quiz funnel moderne et épuré pour filtrer et accéder à un catalogue exclusif de plus de 150 hôtesses de confiance avec contacts WhatsApp vérifiés.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
