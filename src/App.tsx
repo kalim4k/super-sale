@@ -179,9 +179,6 @@ export default function App() {
           </div>
 
         </div>
-        
-        {/* Visitor chat widget on the passcode lock page */}
-        <VisitorChatWidget age={state.age} country={state.country} />
       </div>
     );
   }
