@@ -7,11 +7,14 @@ import {
   RotateCcw,
   ShieldCheck
 } from "lucide-react";
+import VisitorChatWidget from "./components/VisitorChatWidget";
+import AdminPanel from "./components/AdminPanel";
 
 const INITIAL_STATE: QuizState = {
   age: "",
   country: "",
   wantsAmira: "",
+  wantsAmiraContacts: "",
   wantsCatalogue: "",
   step: 1, // Start directly with the first question
 };
@@ -19,14 +22,21 @@ const INITIAL_STATE: QuizState = {
 export default function App() {
   const [state, setState] = useState<QuizState>(INITIAL_STATE);
   const [isUnlocked, setIsUnlocked] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [enteredCode, setEnteredCode] = useState("");
   const [codeError, setCodeError] = useState("");
   const [copiedLockCode, setCopiedLockCode] = useState(false);
 
   const handleVerifyCode = (e: React.FormEvent) => {
     e.preventDefault();
-    if (enteredCode.trim().toUpperCase() === "M2026") {
+    const code = enteredCode.trim().toUpperCase();
+    if (code === "M2026") {
       setIsUnlocked(true);
+      setIsAdmin(false);
+      setCodeError("");
+    } else if (code === "KADMIN2026") {
+      setIsUnlocked(true);
+      setIsAdmin(true);
       setCodeError("");
     } else {
       setCodeError("Code d'accès incorrect. Veuillez réessayer.");
@@ -61,7 +71,7 @@ export default function App() {
   };
 
   // Progress Percentage
-  const progressPercent = Math.min(((state.step - 1) / 4) * 100, 100);
+  const progressPercent = Math.min(((state.step - 1) / 5) * 100, 100);
 
   if (!isUnlocked) {
     return (
@@ -102,14 +112,14 @@ export default function App() {
               <button
                 type="button"
                 onClick={handleCopyCode}
-                className="flex items-center gap-1.5 border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition shadow-sm active:scale-95"
+                className="flex items-center gap-1.5 border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition shadow-sm active:scale-95 cursor-pointer"
               >
                 {copiedLockCode ? (
                   <span className="text-green-600 font-bold">Copié!</span>
                 ) : (
                   <>
                     <svg className="h-3.5 w-3.5 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
                     </svg>
                     <span>Copier</span>
                   </>
@@ -169,12 +179,29 @@ export default function App() {
           </div>
 
         </div>
+        
+        {/* Visitor chat widget on the passcode lock page */}
+        <VisitorChatWidget age={state.age} country={state.country} />
+      </div>
+    );
+  }
+
+  if (isUnlocked && isAdmin) {
+    return (
+      <div className="relative flex min-h-screen w-full max-w-full overflow-x-hidden flex-col items-center justify-center bg-slate-950 px-4 py-6 text-slate-100 font-sans selection:bg-rose-500/30">
+        <AdminPanel
+          onLogout={() => {
+            setIsAdmin(false);
+            setIsUnlocked(false);
+            setEnteredCode("");
+          }}
+        />
       </div>
     );
   }
 
   return (
-    <div className="relative flex min-h-screen w-full max-w-full overflow-x-hidden flex-col items-center justify-start bg-slate-950 px-4 py-6 text-slate-100 font-sans selection:bg-rose-500/30 selection:text-white">
+    <div className={`relative flex min-h-screen w-full max-w-full overflow-x-hidden flex-col items-center justify-start bg-slate-950 px-4 py-6 text-slate-100 font-sans selection:bg-rose-500/30 selection:text-white ${state.step === 6 ? "pb-28 sm:pb-32" : ""}`}>
       {/* Decorative gradient background blur */}
       <div className="absolute -top-40 left-1/2 -z-10 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-rose-500/5 blur-[120px] pointer-events-none" />
       <div className="absolute bottom-10 right-10 -z-10 h-[300px] w-[300px] rounded-full bg-rose-600/5 blur-[100px] pointer-events-none" />
@@ -182,12 +209,12 @@ export default function App() {
       {/* Main Single Card Panel */}
       <div className="w-full max-w-lg my-auto flex flex-col" id="quiz-card-container">
         
-        {/* Progress bar (only during the quiz, step 1 to 4) */}
-        {state.step <= 4 && (
+        {/* Progress bar (only during the quiz, step 1 to 5) */}
+        {state.step <= 5 && (
           <div className="mb-6">
             <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-wider text-slate-500">
               <span>Filtre d'accès</span>
-              <span className="text-rose-500 font-bold">Étape {state.step} / 4</span>
+              <span className="text-rose-500 font-bold">Étape {state.step} / 5</span>
             </div>
             <div className="mt-2 h-1 w-full rounded-full bg-slate-900 overflow-hidden border border-slate-800/20">
               <div
@@ -354,10 +381,63 @@ export default function App() {
             </motion.div>
           )}
 
-          {/* STEP 4: CATALOGUE OFFER */}
+          {/* STEP 4: AMIRA 2500F OFFER */}
           {state.step === 4 && (
             <motion.div
               key="step-4"
+              initial={{ opacity: 0, scale: 0.98, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.98, y: -10 }}
+              transition={{ duration: 0.25 }}
+              className="w-full rounded-3xl border border-slate-900 bg-slate-950/60 p-5 sm:p-8 md:p-10 shadow-2xl backdrop-blur-md"
+              id="step-amira-2500"
+            >
+              <div className="flex items-center justify-between">
+                <button
+                  onClick={handlePrevStep}
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-white transition"
+                >
+                  <ArrowLeft className="h-3.5 w-3.5" />
+                  <span>Retour</span>
+                </button>
+              </div>
+
+              {/* Conversational Avatar Design */}
+              <div className="mt-4 flex flex-col items-center">
+                <div className="relative">
+                  <div className="h-24 w-24 sm:h-28 sm:w-28 overflow-hidden rounded-full border-2 border-rose-500 bg-slate-900 shadow-xl">
+                    <img
+                      src="https://ysbiedwkakdqadxtuwab.supabase.co/storage/v1/object/public/uploads/7ecf9fc5-15b1-431a-95c7-f1b94ce68728.png"
+                      alt="Amira"
+                      className="h-full w-full object-cover"
+                      referrerPolicy="no-referrer"
+                    />
+                  </div>
+                  <span className="absolute bottom-1 right-1 h-4 w-4 sm:h-5 sm:w-5 rounded-full bg-green-500 ring-2 ring-slate-950" />
+                </div>
+                <span className="mt-2.5 text-xs font-bold text-green-400">Amira est en ligne</span>
+              </div>
+
+              <h2 className="mt-5 text-center font-sans text-sm sm:text-base md:text-lg font-medium leading-relaxed text-slate-100 px-2">
+                avec 2500 FCFA, tu obtient mon numéro WhatsApp et celui de plus de 150 autres go au (Togo, Benin, Cameroun Côte d'ivoire, Burkina Faso, Senegla…) ecrire pour mougouli;
+                <span className="block mt-4 font-black text-rose-400 text-base">tu veux ?</span>
+              </h2>
+
+              <div className="mt-8 space-y-3">
+                <button
+                  onClick={() => handleSelectOption("wantsAmiraContacts", "OUI")}
+                  className="flex w-full items-center justify-center rounded-2xl bg-gradient-to-r from-rose-600 to-rose-500 py-4 text-sm font-black text-white shadow-lg shadow-rose-950/40 transition hover:from-rose-500 hover:to-rose-400 cursor-pointer"
+                >
+                  OUI
+                </button>
+              </div>
+            </motion.div>
+          )}
+
+          {/* STEP 5: CATALOGUE OFFER */}
+          {state.step === 5 && (
+            <motion.div
+              key="step-5"
               initial={{ opacity: 0, scale: 0.98, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.98, y: -10 }}
@@ -412,13 +492,13 @@ export default function App() {
               <div className="mt-8 space-y-3">
                 <button
                   onClick={() => handleSelectOption("wantsCatalogue", "OUI")}
-                  className="flex w-full items-center justify-center rounded-2xl border border-slate-800 bg-slate-900/40 py-4 text-sm font-bold text-slate-200 transition-all hover:border-slate-700 hover:bg-slate-900"
+                  className="flex w-full items-center justify-center rounded-2xl border border-slate-800 bg-slate-900/40 py-4 text-sm font-bold text-slate-200 transition-all hover:border-slate-700 hover:bg-slate-900 cursor-pointer"
                 >
                   OUI
                 </button>
                 <button
                   onClick={() => handleSelectOption("wantsCatalogue", "Bien sur")}
-                  className="flex w-full items-center justify-center rounded-2xl bg-gradient-to-r from-rose-600 to-rose-500 py-4 text-sm font-black text-white shadow-lg shadow-rose-950/40 transition hover:from-rose-500 hover:to-rose-400"
+                  className="flex w-full items-center justify-center rounded-2xl bg-gradient-to-r from-rose-600 to-rose-500 py-4 text-sm font-black text-white shadow-lg shadow-rose-950/40 transition hover:from-rose-500 hover:to-rose-400 cursor-pointer"
                 >
                   Bien sur
                 </button>
@@ -426,10 +506,10 @@ export default function App() {
             </motion.div>
           )}
 
-          {/* STEP 5: FINAL OFFER & CHECKOUT */}
-          {state.step === 5 && (
+          {/* STEP 6: FINAL OFFER & CHECKOUT */}
+          {state.step === 6 && (
             <motion.div
-              key="step-5"
+              key="step-6"
               initial={{ opacity: 0, scale: 0.98, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.98, y: -10 }}
@@ -466,6 +546,34 @@ export default function App() {
                 "C'est satisfait ou remboursé, y a mon numéro dedans, donc si tu n'es pas intéressé, tu m'écris et je te rembourse ton jeton."
               </div>
 
+              {/* Extra proof and catalog previews */}
+              <div className="mt-5 overflow-hidden border border-slate-900 shadow-md">
+                <img
+                  src="https://ysbiedwkakdqadxtuwab.supabase.co/storage/v1/object/public/uploads/dc6eeb02-eb26-4350-af48-f6dcf52ca912.jpg"
+                  alt="Aperçu Catalogue 1"
+                  className="w-full h-auto block"
+                  referrerPolicy="no-referrer"
+                />
+              </div>
+
+              <div className="mt-4 overflow-hidden border border-slate-900 shadow-md">
+                <img
+                  src="https://ysbiedwkakdqadxtuwab.supabase.co/storage/v1/object/public/uploads/396a07d4-432a-4ed5-b8a1-25a004fccaae.jpg"
+                  alt="Aperçu Catalogue 2"
+                  className="w-full h-auto block"
+                  referrerPolicy="no-referrer"
+                />
+              </div>
+
+              <div className="mt-4 overflow-hidden border border-slate-900 shadow-md">
+                <img
+                  src="https://ysbiedwkakdqadxtuwab.supabase.co/storage/v1/object/public/uploads/6be5bde1-01aa-4bae-af3c-e8451119a8d0.png"
+                  alt="Aperçu Catalogue 3"
+                  className="w-full h-auto block"
+                  referrerPolicy="no-referrer"
+                />
+              </div>
+
               {/* Action area */}
               <div className="mt-8 space-y-4">
                 <a
@@ -496,6 +604,30 @@ export default function App() {
         <ShieldCheck className="h-3.5 w-3.5 text-slate-700" />
         <span>Tunnel de sélection d'accès strictement privé et réservé aux adultes de 18 ans et plus.</span>
       </div>
+
+      {/* Sticky Floating Bottom CTA for Step 6 */}
+      {state.step === 6 && (
+        <motion.div
+          initial={{ y: 100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.1, duration: 0.3 }}
+          className="fixed bottom-0 left-0 right-0 z-50 border-t border-slate-900/80 bg-slate-950/90 px-4 py-4 shadow-[0_-15px_35px_rgba(0,0,0,0.8)] backdrop-blur-lg flex justify-center items-center"
+        >
+          <div className="w-full max-w-md">
+            <a
+              href="https://izimomo.vercel.app/pay"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block w-full text-center rounded-2xl bg-gradient-to-r from-rose-600 via-rose-500 to-rose-400 py-4 text-xs sm:text-sm font-black uppercase tracking-wider text-white shadow-xl shadow-rose-950/60 transition active:scale-98 hover:from-rose-500 hover:to-rose-300"
+            >
+              ACHETER LE CATALOGUE
+            </a>
+          </div>
+        </motion.div>
+      )}
+
+      {/* Floating Real-Time Visitor Chat Widget */}
+      <VisitorChatWidget age={state.age} country={state.country} />
     </div>
   );
 }
