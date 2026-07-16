@@ -11,7 +11,8 @@ import {
   MessageSquare,
   Search,
   Trash2,
-  Copy
+  Copy,
+  ArrowLeft
 } from "lucide-react";
 import { 
   supabase, 
@@ -314,10 +315,10 @@ ALTER PUBLICATION supabase_realtime ADD TABLE messages;`;
   };
 
   return (
-    <div className="w-full max-w-6xl min-h-[600px] bg-slate-950 border border-slate-900 rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row text-slate-100 font-sans">
+    <div className="w-full max-w-6xl min-h-[600px] bg-slate-950 border border-slate-900 rounded-3xl overflow-hidden shadow-2xl flex flex-row text-slate-100 font-sans">
       
       {/* Left sidebar: Thread index */}
-      <div className="w-full md:w-[350px] border-r border-slate-900/80 bg-slate-950 flex flex-col">
+      <div className={`w-full md:w-[350px] border-r border-slate-900/80 bg-slate-950 flex-col shrink-0 ${selectedVisitorId ? 'hidden md:flex' : 'flex'}`}>
         {/* Header brand */}
         <div className="p-4 bg-[#202c33] border-b border-slate-900 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
@@ -439,12 +440,20 @@ ALTER PUBLICATION supabase_realtime ADD TABLE messages;`;
       </div>
 
       {/* Right panel: Conversations & DB helper */}
-      <div className="flex-1 bg-[#222e35] flex flex-col min-w-0">
+      <div className={`flex-1 bg-[#222e35] flex-col min-w-0 ${selectedVisitorId ? 'flex' : 'hidden md:flex'}`}>
         {selectedVisitorId ? (
           <div className="flex-1 flex flex-col min-h-0 bg-[#0b141a]">
             {/* Active thread header */}
             <div className="p-3 bg-[#202c33] border-b border-slate-900 flex items-center justify-between shadow-sm">
               <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => setSelectedVisitorId(null)}
+                  className="md:hidden flex h-9 w-9 items-center justify-center rounded-full text-[#aebac1] hover:bg-white/10 hover:text-white transition-all duration-150 -ml-1 mr-1"
+                  title="Retour aux discussions"
+                >
+                  <ArrowLeft className="h-5 w-5" />
+                </button>
                 <div className="h-10 w-10 rounded-full bg-[#111b21] border border-slate-800 flex items-center justify-center text-xs font-black text-[#00a884]">
                   {selectedVisitor?.visitor_name.substring(0, 2).toUpperCase() || "VI"}
                 </div>
