@@ -65,8 +65,8 @@ export default function App() {
 
   if (!isUnlocked) {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center bg-[#f8f9fa] px-4 py-8 text-slate-800 font-sans selection:bg-blue-500/30">
-        <div className="w-full max-w-[440px] bg-white rounded-[28px] border border-slate-100 shadow-xl p-5 xs:p-8 sm:p-10 flex flex-col items-center" id="lock-card">
+      <div className="relative flex min-h-screen w-full max-w-full overflow-x-hidden flex-col items-center justify-start bg-[#f8f9fa] px-4 py-6 text-slate-800 font-sans selection:bg-blue-500/30">
+        <div className="w-full max-w-[440px] my-auto bg-white rounded-[28px] border border-slate-100 shadow-xl p-5 sm:p-8 md:p-10 flex flex-col items-center animate-fade-in" id="lock-card">
           
           {/* Avatar frame with Amira's photo */}
           <div className="flex justify-center mb-4">
@@ -74,7 +74,7 @@ export default function App() {
               <img
                 src="https://ysbiedwkakdqadxtuwab.supabase.co/storage/v1/object/public/uploads/7ecf9fc5-15b1-431a-95c7-f1b94ce68728.png"
                 alt="Amira Profile"
-                className="h-full w-full object-cover animate-fade-in"
+                className="h-full w-full object-cover"
                 referrerPolicy="no-referrer"
               />
             </div>
@@ -174,13 +174,13 @@ export default function App() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-slate-950 px-4 py-8 text-slate-100 font-sans selection:bg-rose-500/30 selection:text-white">
+    <div className="relative flex min-h-screen w-full max-w-full overflow-x-hidden flex-col items-center justify-start bg-slate-950 px-4 py-6 text-slate-100 font-sans selection:bg-rose-500/30 selection:text-white">
       {/* Decorative gradient background blur */}
       <div className="absolute -top-40 left-1/2 -z-10 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-rose-500/5 blur-[120px] pointer-events-none" />
       <div className="absolute bottom-10 right-10 -z-10 h-[300px] w-[300px] rounded-full bg-rose-600/5 blur-[100px] pointer-events-none" />
 
       {/* Main Single Card Panel */}
-      <div className="w-full max-w-lg" id="quiz-card-container">
+      <div className="w-full max-w-lg my-auto flex flex-col" id="quiz-card-container">
         
         {/* Progress bar (only during the quiz, step 1 to 4) */}
         {state.step <= 4 && (
@@ -207,10 +207,10 @@ export default function App() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.98, y: -10 }}
               transition={{ duration: 0.25 }}
-              className="w-full rounded-3xl border border-slate-900 bg-slate-950/60 p-5 xs:p-6 sm:p-10 shadow-2xl backdrop-blur-md"
+              className="w-full rounded-3xl border border-slate-900 bg-slate-950/60 p-5 sm:p-8 md:p-10 shadow-2xl backdrop-blur-md"
               id="step-age"
             >
-              <h1 className="text-center font-display text-xl xs:text-2xl font-bold tracking-tight text-white sm:text-3xl">
+              <h1 className="text-center font-display text-lg sm:text-2xl md:text-3xl font-bold tracking-tight text-white">
                 Quel est votre âge ?
               </h1>
               <p className="mt-2 text-center text-xs text-slate-400">
@@ -244,7 +244,7 @@ export default function App() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.98, y: -10 }}
               transition={{ duration: 0.25 }}
-              className="w-full rounded-3xl border border-slate-900 bg-slate-950/60 p-5 xs:p-6 sm:p-10 shadow-2xl backdrop-blur-md"
+              className="w-full rounded-3xl border border-slate-900 bg-slate-950/60 p-5 sm:p-8 md:p-10 shadow-2xl backdrop-blur-md"
               id="step-country"
             >
               <div className="flex items-center justify-between">
@@ -266,14 +266,14 @@ export default function App() {
                 />
               </div>
 
-              <h1 className="mt-5 text-center font-display text-xl xs:text-2xl font-bold tracking-tight text-white sm:text-3xl">
+              <h1 className="mt-5 text-center font-display text-lg sm:text-2xl md:text-3xl font-bold tracking-tight text-white">
                 Quel est votre pays ?
               </h1>
               <p className="mt-2 text-center text-xs text-slate-400">
                 Sélectionnez votre localisation pour obtenir les bons contacts.
               </p>
 
-              <div className="mt-6 grid grid-cols-2 gap-2">
+              <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {[
                   { label: "Togo 🇹🇬", value: "Togo" },
                   { label: "Benin 🇧🇯", value: "Benin" },
@@ -287,7 +287,7 @@ export default function App() {
                   <button
                     key={opt.value}
                     onClick={() => handleSelectOption("country", opt.value)}
-                    className="flex items-center justify-between rounded-xl border border-slate-800/80 bg-slate-900/35 px-3 py-3 text-xs xs:text-sm font-semibold text-slate-200 transition-all duration-200 hover:border-rose-500/30 hover:bg-slate-900/80 hover:text-white"
+                    className="flex items-center justify-between rounded-xl border border-slate-800/80 bg-slate-900/35 px-4 py-3.5 text-xs sm:text-sm font-semibold text-slate-200 transition-all duration-200 hover:border-rose-500/30 hover:bg-slate-900/80 hover:text-white"
                   >
                     <span>{opt.label}</span>
                   </button>
@@ -304,7 +304,7 @@ export default function App() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.98, y: -10 }}
               transition={{ duration: 0.25 }}
-              className="w-full rounded-3xl border border-slate-900 bg-slate-950/60 p-5 xs:p-6 sm:p-10 shadow-2xl backdrop-blur-md"
+              className="w-full rounded-3xl border border-slate-900 bg-slate-950/60 p-5 sm:p-8 md:p-10 shadow-2xl backdrop-blur-md"
               id="step-amira-offer"
             >
               <div className="flex items-center justify-between">
@@ -333,7 +333,7 @@ export default function App() {
                 <span className="mt-2.5 text-xs font-bold text-green-400">Amira est en ligne</span>
               </div>
 
-              <h2 className="mt-5 text-center font-sans text-sm xs:text-base sm:text-lg md:text-xl font-medium leading-relaxed text-slate-100 px-2">
+              <h2 className="mt-5 text-center font-sans text-sm sm:text-base md:text-lg font-medium leading-relaxed text-slate-100 px-2">
                 Je suis Amira, je te propose un mougouli à 7000f? voulez vous son numéro WhatsApp ?
               </h2>
 
@@ -362,7 +362,7 @@ export default function App() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.98, y: -10 }}
               transition={{ duration: 0.25 }}
-              className="w-full rounded-3xl border border-slate-900 bg-slate-950/60 p-5 xs:p-6 sm:p-10 shadow-2xl backdrop-blur-md"
+              className="w-full rounded-3xl border border-slate-900 bg-slate-950/60 p-4 sm:p-8 md:p-10 shadow-2xl backdrop-blur-md"
               id="step-catalogue-offer"
             >
               <div className="flex items-center justify-between">
@@ -395,16 +395,16 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="mt-4 overflow-hidden rounded-2xl border border-slate-900 shadow-md">
+              <div className="mt-4 overflow-hidden border border-slate-900 shadow-md">
                 <img
                   src="https://ysbiedwkakdqadxtuwab.supabase.co/storage/v1/object/public/uploads/a54a78c4-d777-45cb-939a-69ce5e28e28c.png"
                   alt="Aperçu VIP"
-                  className="w-full h-auto object-cover max-h-40 sm:max-h-64"
+                  className="w-full h-auto block"
                   referrerPolicy="no-referrer"
                 />
               </div>
 
-              <h2 className="mt-4 text-center font-sans text-xs xs:text-sm sm:text-base md:text-lg font-medium leading-relaxed text-slate-200">
+              <h2 className="mt-4 text-center font-sans text-xs sm:text-sm md:text-base font-medium leading-relaxed text-slate-200">
                 Dans ce cas je vous propose aussi un catalogue complet de plus de 100 numéros WhatsApp de kpoclé que tu peux appeler pour mougouli;
                 tu es intéressé ?
               </h2>
@@ -434,20 +434,20 @@ export default function App() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.98, y: -10 }}
               transition={{ duration: 0.3 }}
-              className="w-full rounded-3xl border border-slate-900 bg-slate-950/65 p-5 xs:p-6 sm:p-10 shadow-2xl backdrop-blur-md"
+              className="w-full rounded-3xl border border-slate-900 bg-slate-950/65 p-4 sm:p-8 md:p-10 shadow-2xl backdrop-blur-md"
               id="step-final-checkout"
             >
-              <div className="mb-5 overflow-hidden rounded-2xl border border-slate-900 shadow-md">
+              <div className="mb-5 overflow-hidden border border-slate-900 shadow-md">
                 <img
                   src="https://ysbiedwkakdqadxtuwab.supabase.co/storage/v1/object/public/uploads/a54a78c4-d777-45cb-939a-69ce5e28e28c.png"
                   alt="Aperçu Catalogue VIP"
-                  className="w-full h-auto object-cover max-h-40 sm:max-h-64"
+                  className="w-full h-auto block"
                   referrerPolicy="no-referrer"
                 />
               </div>
 
               {/* Copy part 1 */}
-              <p className="text-center text-xs xs:text-sm sm:text-base font-bold text-white leading-relaxed">
+              <p className="text-center text-xs sm:text-sm md:text-base font-bold text-white leading-relaxed">
                 Parfait, voici le catalogue que j'ai préparé pour toi. Ya mon numéro dedans avec plus de 150 kpoklé de (Togo, Bénin, côte d'ivoire, Senegal, Burkina Faso, Mali, Cameroun, Niger…)
               </p>
 
@@ -462,7 +462,7 @@ export default function App() {
               </div>
 
               {/* Copy part 2 */}
-              <div className="mt-4 rounded-2xl bg-rose-950/15 border border-rose-900/20 p-4 text-center text-[11px] xs:text-xs text-rose-300 leading-relaxed font-medium">
+              <div className="mt-4 rounded-2xl bg-rose-950/15 border border-rose-900/20 p-4 text-center text-[11px] sm:text-xs text-rose-300 leading-relaxed font-medium">
                 "C'est satisfait ou remboursé, y a mon numéro dedans, donc si tu n'es pas intéressé, tu m'écris et je te rembourse ton jeton."
               </div>
 
